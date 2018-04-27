@@ -26,7 +26,9 @@ int zoomIn() {
 	int k = 0;
 	int l = 0;
 	for (int i = 0; i < maxLinhas; i++) {
-		for (int j = 0; j < maxColunas - 1; j++) {
+		l = 0;
+		for (int j = 0; j < maxColunas; j++) {
+			cout << "Vai começar o for\n";
 			Vec3b pixel1 = img.at<Vec3b>(i, j);
 			Vec3b pixel2 = img.at<Vec3b>(i, j + 1);
 			int r1 = pixel1[2];
@@ -69,9 +71,9 @@ int zoomIn() {
 				newPixel2[0] = newB2;
 				result.at<Vec3b>(k + 1, l) = newPixel2;
 
-				int newR3 = (r1 + r2 + r3 + r3) / 4;
-				int newG3 = (g1 + g2 + g3 + g3) / 4;
-				int newB3 = (b1 + b2 + b3 + b3) / 4;
+				int newR3 = (r1 + r2 + r3 + r4) / 4;
+				int newG3 = (g1 + g2 + g3 + g4) / 4;
+				int newB3 = (b1 + b2 + b3 + b4) / 4;
 
 				Vec3b newPixel3;
 				newPixel3[2] = newR3;
@@ -83,7 +85,7 @@ int zoomIn() {
 		}
 		k += 2;
 	}
-
+	imwrite("./ZoomIn.jpg",result);
 	return 1;
 }
 
