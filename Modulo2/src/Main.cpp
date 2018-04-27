@@ -13,6 +13,71 @@
 using namespace cv;
 using namespace std;
 
+int limiar() {
+	Mat imgSemObj, imgComObj, resultante;
+	imgComObj = imread("./ComObj.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+	imgSemObj = imread("./SemObj.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+
+	if (!imgComObj.data) {
+		cout << "Imagem com objeto não existe.\n";
+		return -1;
+	}
+	if (!imgComObj.data) {
+		cout << "Imagem sem objeto não existe.\n";
+		return -1;
+	}
+
+	int maxLinha = imgComObj.rows;
+	int maxColuna = imgComObj.cols;
+
+	resultante.create(maxLinha, maxColuna, CV_8UC3);
+
+	cout << "Digite o parâmetro do limiar de binarização:";
+	int limiar;
+	cin >> limiar;
+
+	for (int i = 0; i < maxLinha; i++) {
+		for (int j = 0; j < maxColuna; j++) {
+			Vec3b pixelC = imgComObj.at<Vec3b>(i, j);
+			Vec3b pixelS = imgSemObj.at<Vec3b>(i, j);
+			int rC = pixelC[2];
+			int gC = pixelC[1];
+			int bC = pixelC[0];
+
+			int rS = pixelS[2];
+			int gS = pixelS[1];
+			int bS = pixelS[0];
+
+			int rR = abs(rC - rS);
+			int gR = abs(gC - gS);
+			int bR = abs(bC - bS);
+
+			if (rR >= limiar)
+				rR = 255;
+			else
+				rR = 0;
+
+			if (gR >= limiar)
+				gR = 255;
+			else
+				gR = 0;
+
+			if (bR >= limiar)
+				bR = 255;
+			else
+				bR = 0;
+			Vec3b pixelR;
+			pixelR[2] = rR;
+			pixelR[1] = gR;
+			pixelR[0] = bR;
+
+			resultante.at<Vec3b>(i, j) = pixelR;
+		}
+	}
+	imwrite("./ImagemInteresse.jpg", resultante);
+	return 1;
+}
+
 int zoomIn() {
 	Mat img, result;
 	img = imread("./lena.jpg", CV_LOAD_IMAGE_COLOR);
@@ -85,11 +150,12 @@ int zoomIn() {
 		}
 		k += 2;
 	}
-	imwrite("./ZoomIn.jpg",result);
+	imwrite("./ZoomIn.jpg", result);
 	return 1;
 }
 
 int main() {
-	zoomIn();
+	//zoomIn();
+	limiar();
 	return 1;
 }
