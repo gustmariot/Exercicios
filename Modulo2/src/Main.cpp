@@ -13,6 +13,71 @@
 using namespace cv;
 using namespace std;
 
+int zoomOut() {
+    Mat img, result;
+    img = imread("./lena.jpg", CV_LOAD_IMAGE_COLOR);
+    if (!img.data) {
+        cout << "Image not found";
+        return -1;
+    }
+    int linhasOrig = img.rows;
+    int colunasOrig = img.cols;
+    int maxL = ceil(linhasOrig);
+    int maxC = ceil(colunasOrig);
+    cout << maxL;
+    cout << maxC;
+    printf("maxL: %d, maxC: %d",maxL, maxC);
+    result.create(maxL, maxC, CV_8UC3);
+    for (int l = 0; l < maxL; l++) {
+        for (int k = 0; k < maxC; k++) {
+            int somaR = 0;
+            int somaG = 0;
+            int somaB = 0;
+            int i = l*2;
+            int j = k*2;
+            int it = 0;
+            Vec3b pixel = img.at<Vec3b>(i, j);
+            somaR += pixel[2];
+            somaG += pixel[1];
+            somaB += pixel[0];
+            if (i < linhasOrig + 1) {
+                pixel = img.at<Vec3b>(i + 1, j);
+                somaR += pixel[2];
+                somaG += pixel[1];
+                somaB += pixel[0];
+                it++;
+                if (j < linhasOrig + 1) {
+                    pixel = img.at<Vec3b>(i, j + 1);
+                    somaR += pixel[2];
+                    somaG += pixel[1];
+                    somaB += pixel[0];
+                    it++;
+                    pixel = img.at<Vec3b>(i + 1, j + 1);
+                    somaR += pixel[2];
+                    somaG += pixel[1];
+                    somaB += pixel[0];
+                    it++;
+                }
+            } else {
+                if (j < linhasOrig + 1) {
+                    pixel = img.at<Vec3b>(i, j + 1);
+                    somaR += pixel[2];
+                    somaG += pixel[1];
+                    somaB += pixel[0];
+                    it++;
+                }
+            }
+            Vec3b newPixel;
+            newPixel[2] = (int)somaR / it;
+            newPixel[1] = (int)somaG / it;
+            newPixel[0] = (int)somaB / it;
+            result.at<Vec3b>(l, k) = newPixel;
+        }
+    }
+    imwrite("./ZoomOut.jpg", result);
+    return 1;
+}
+
 int limiar() {
 	Mat imgSemObj, imgComObj, resultante;
 	imgComObj = imread("./ComObj.jpg", CV_LOAD_IMAGE_GRAYSCALE);
@@ -155,7 +220,8 @@ int zoomIn() {
 }
 
 int main() {
-	//zoomIn();
+	zoomIn();
+	zoomOut();
 	limiar();
 	return 1;
 }
