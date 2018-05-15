@@ -3,7 +3,7 @@
  *
  *  Created on: 17/04/2018
  *      Author: gustavo
- */
+*/
 
 #include <iostream>
 #include <opencv2/core/core.hpp>
@@ -225,3 +225,42 @@ int main() {
 	limiar();
 	return 1;
 }
+
+/*
+ *
+ * CÓDIGO DO MAURICIO E KUERTEN
+
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/videoio.hpp"
+#include <opencv2/highgui.hpp>
+#include <opencv2/video.hpp>
+#include <iostream>
+#include <sstream>
+#include <vector>
+
+
+using namespace cv;
+using namespace std;
+
+
+int main(int argc, char* argv[])
+{
+	Mat bkg, bkgp, nbkg;
+
+	bkg = imread("./ComObj.jpg");
+	bkgp = imread("./SemObj.jpg");
+	if(bkg.empty() || bkgp.empty()){
+		cerr << "Unable to open image frame: ";
+		exit(EXIT_FAILURE);
+	}
+	cv::cvtColor(bkg,bkg, CV_BGR2GRAY);
+	cv::cvtColor(bkgp,bkgp, CV_BGR2GRAY);
+	absdiff(bkg,bkgp,nbkg);
+	imwrite( "./Exerc2.jpg", nbkg);
+
+
+    return EXIT_SUCCESS;
+}
+
+*/
