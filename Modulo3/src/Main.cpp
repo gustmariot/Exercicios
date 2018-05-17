@@ -101,8 +101,71 @@ int exercicio1(string entrada, string saida) {
 	return 0;
 }
 
+int exercicio2() {
+
+	Mat img, img2;
+
+	img = imread("./arruela.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+	if (!img.data) {
+		cout << "Image not found";
+		return -1;
+	}
+
+	int colunas = img.cols;
+	int linhas = img.rows;
+
+	int i, j, brancos1 = 0, naoBrancos1 = 0, brancos2 = 0, naoBrancos2 = 0, last = 0;
+	float p1, p2, esp1, esp2;
+
+	for (i = 0; i < linhas; ++i) {
+
+		for (j = 0; j < colunas; j++) {
+			Vec3b pixel = img.at<Vec3b>(i, j);
+
+			int v1 = pixel[0];
+			if (v1 == 255) {
+				brancos1++;
+			} else {
+				naoBrancos1++;
+			}
+		}
+	}
+
+	p1 = (float)naoBrancos1/brancos1;
+
+	img2 = imread("./imgComp.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+	if (!img.data) {
+		cout << "Image not found";
+		return -1;
+	}
+
+	colunas = img2.cols;
+	linhas = img2.rows;
+
+	for (i = 0; i < linhas; ++i) {
+		for (j = 0; j < colunas; j++) {
+			Vec3b pixel = img2.at<Vec3b>(i, j);
+
+			int v1 = pixel[0];
+			if (v1 == 255) {
+				brancos2++;
+			} else {
+				naoBrancos2++;
+			}
+		}
+	}
+
+	p2 =(float)naoBrancos2/brancos2;
+
+	cout << "prop1 " << p1 << "\n";
+	cout << "prop2 " << p2 << "\n";
+
+	return 0;
+}
+
 int main() {
 	exercicio1("./ComObj.jpg", "./ComObj");
 	exercicio1("./ComObjSalEPimenta.jpg", "./ComObjSalEPimenta");
+	exercicio2();
 	return 1;
 }
