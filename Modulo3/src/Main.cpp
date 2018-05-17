@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <algorithm>
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
 
@@ -110,12 +111,13 @@ int exercicio2() {
 		cout << "Image not found";
 		return -1;
 	}
+	threshold(img, img, 150, 255, THRESH_BINARY);
 
 	int colunas = img.cols;
 	int linhas = img.rows;
 
 	int i, j, brancos1 = 0, naoBrancos1 = 0, brancos2 = 0, naoBrancos2 = 0, last = 0;
-	float p1, p2, esp1, esp2;
+	float p1, p2, pf, esp1, esp2;
 
 	for (i = 0; i < linhas; ++i) {
 
@@ -138,6 +140,7 @@ int exercicio2() {
 		cout << "Image not found";
 		return -1;
 	}
+	threshold(img2, img2, 100, 255, THRESH_BINARY);
 
 	colunas = img2.cols;
 	linhas = img2.rows;
@@ -157,8 +160,15 @@ int exercicio2() {
 
 	p2 =(float)naoBrancos2/brancos2;
 
-	cout << "prop1 " << p1 << "\n";
-	cout << "prop2 " << p2 << "\n";
+	pf = p1/p2;
+
+	if(0.9 <= pf && pf <= 1.1 ){
+		cout << "aprovado \n";
+	} else {
+		cout << "negado \n";
+	}
+
+	cout << "prop: " << pf;
 
 	return 0;
 }
