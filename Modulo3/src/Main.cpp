@@ -8,7 +8,7 @@
 #include <iostream>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <string>
+#include <string.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,48 +19,42 @@
 using namespace cv;
 using namespace std;
 
-int exercicio1() {
+int pegarValorPixel(int i, int j, Mat img) {
+	Vec3b pixel = img.at<Vec3b>(i, j);
+	int v = pixel[0];
+	return v;
+}
+
+int exercicio1(string entrada, string saida) {
 	Mat img, imgMedia, imgMediana, imgSobel;
 
-	img = imread("./ComObj.jpg", CV_LOAD_IMAGE_GRAYSCALE);
+	img = imread(entrada, CV_LOAD_IMAGE_GRAYSCALE);
 	if (!img.data) {
 		cout << "Image not found";
 		return -1;
 	}
 
-	imwrite("./Cinza.jpg", img);
+	imwrite(saida + "Cinza.jpg", img);
 
 	int colunas = img.cols;
 	int linhas = img.rows;
-	cout << "linhas = " << linhas << "\n";
-	cout << "colunas = " << colunas << "\n";
 
 	imgMedia = img.clone();
 	imgMediana = img.clone();
 	imgSobel = img.clone();
 	int i, j;
 
-	for (i = 1; i < colunas - 2; i++) {
-		for (j = 1; j < linhas - 2; j++) {
-			Vec3b pixel1 = img.at<Vec3b>(i - 1, j - 1);
-			Vec3b pixel2 = img.at<Vec3b>(i - 1, j);
-			Vec3b pixel3 = img.at<Vec3b>(i - 1, j + 1);
-			Vec3b pixel4 = img.at<Vec3b>(i, j - 1);
-			Vec3b pixel5 = img.at<Vec3b>(i, j);
-			Vec3b pixel6 = img.at<Vec3b>(i, j + 1);
-			Vec3b pixel7 = img.at<Vec3b>(i + 1, j - 1);
-			Vec3b pixel8 = img.at<Vec3b>(i + 1, j);
-			Vec3b pixel9 = img.at<Vec3b>(i + 1, j + 1);
-
-			int v1 = pixel1[0];
-			int v2 = pixel2[0];
-			int v3 = pixel3[0];
-			int v4 = pixel4[0];
-			int v5 = pixel5[0];
-			int v6 = pixel6[0];
-			int v7 = pixel7[0];
-			int v8 = pixel8[0];
-			int v9 = pixel9[0];
+	for (i = 1; i < linhas - 2; i++) {
+		for (j = 1; j < colunas - 2; j++) {
+			int v1 = pegarValorPixel(i - 1, j - 1, img);
+			int v2 = pegarValorPixel(i - 1, j, img);
+			int v3 = pegarValorPixel(i - 1, j + 1, img);
+			int v4 = pegarValorPixel(i, j - 1, img);
+			int v5 = pegarValorPixel(i, j, img);
+			int v6 = pegarValorPixel(i, j + 1, img);
+			int v7 = pegarValorPixel(i + 1, j - 1, img);
+			int v8 = pegarValorPixel(i + 1, j, img);
+			int v9 = pegarValorPixel(i + 1, j + 1, img);
 
 			int vetor[9];
 			vetor[0] = v1;
@@ -99,17 +93,16 @@ int exercicio1() {
 			imgSobel.at<Vec3b>(i, j) = pixelSobel;
 		}
 	}
-	cout << "i = " << i << "\n";
-	cout << "j = " << j << "\n";
 
-	imwrite("./Media.jpg", imgMedia);
-	imwrite("./Mediana.jpg", imgMediana);
-	imwrite("./Sobel.jpg", imgSobel);
+	imwrite(saida + "Media.jpg", imgMedia);
+	imwrite(saida + "Mediana.jpg", imgMediana);
+	imwrite(saida + "Sobel.jpg", imgSobel);
 
 	return 0;
 }
 
 int main() {
-	exercicio1();
+	exercicio1("./ComObj.jpg", "./ComObj");
+	exercicio1("./ComObjSalEPimenta.jpg", "./ComObjSalEPimenta");
 	return 1;
 }
