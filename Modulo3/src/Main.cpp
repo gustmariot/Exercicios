@@ -165,32 +165,30 @@ int exercicio2() {
 }
 
 int exercicio3(string entrada, string saida) {
-	Mat img, imgBin;
-	int i, j;
+	Mat img, canny;
+	vector<vector<Point> > contornos;
+	vector<Vec4i> h;
+	RNG rng(12345);
 
 	img = imread(entrada, CV_LOAD_IMAGE_GRAYSCALE);
 
-	if (!img.data) {
-		cout << "Image not found";
-		return -1;
+	blur(img, img, Size(3, 3));
+
+	Canny(img, canny, 100, 100 * 2, 3);
+	findContours(canny, contornos, h, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE,
+			Point(0, 0));
+
+	Mat desenho = Mat::zeros(canny.size(), CV_8UC3);
+	for (int i = 0; i < contornos.size(); i++) {
+		Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255),
+				rng.uniform(0, 255));
+		drawContours(desenho, contornos, i, color, 2, 8, h, 0, Point());
+
 	}
 
-	threshold(img, imgBin, 100, 255, THRESH_BINARY);
+	imwrite(saida + "ComContorno.jpg",desenho);
 
-	int linhas = img.rows;
-	int colunas = img.cols;
-
-	for (i = 0; i < linhas; i++) {
-		for (j = 0; j < colunas; j++) {
-			Vec3b pixel = imgBin.at<Vec3b>(i,j);
-			int v = pixel[0];
-			if(v == 0){
-
-			}
-		}
-	}
-
-	return 1;
+	return (0);
 }
 
 int main() {
