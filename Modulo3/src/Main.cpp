@@ -200,10 +200,40 @@ int exercicio3(string entrada, string saida) {
 	return (0);
 }
 
+int exercicio4(string entrada){
+
+	  Mat tmp,thr;
+	  Mat src=imread(entrada,1);
+	  cvtColor(src,tmp,CV_BGR2GRAY);
+	  threshold(tmp,thr,200,255,THRESH_BINARY_INV);
+	  namedWindow("thr",0);
+	  imshow("thr",thr);
+
+	  vector<vector <Point>> contours;
+	  vector<Vec4i> hierarchy;
+	  Mat dst(src.rows,src.cols,CV_8UC1,Scalar::all(0));
+	  int count=0;
+
+	  findContours( thr, contours, hierarchy,CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
+
+	  if(hierarchy.size()-1==6){
+	    cout<<"TIPO A"<<endl;
+	  }else if(hierarchy.size()-1==4){
+	    cout<<"TIPO B"<<endl;
+	  }else{
+	    cout<<"REJEITADA!!\n TIPO R"<<endl;
+	  }
+
+
+	  return 0;
+
+}
+
 int main() {
 	exercicio1("./ComObj.jpg", "./ComObj");
 	exercicio1("./ComObjSalEPimenta.jpg", "./ComObjSalEPimenta");
 	exercicio2();
 	exercicio3("./Manchas.jpg", "./Manchas");
+	exercicio4("./6buracos.jpg")
 	return 1;
 }

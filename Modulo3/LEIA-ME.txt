@@ -1,0 +1,18 @@
+Alunos:
+Gustavo Mariotto de Oliveira
+Igor Quitério
+
+Links que foram úteis para a instalação do Opencv e para configuração do Eclipse:
+https://stackoverflow.com/questions/12335848/opencv-program-compile-error-libopencv-core-so-2-4-cannot-open-shared-object-f (usado para corrigir um erro de biblioteca)
+
+https://docs.opencv.org/2.4/doc/tutorials/introduction/linux_install/linux_install.html (tutorial usado para instalar o opencv)
+
+https://docs.opencv.org/2.4/doc/tutorials/introduction/linux_eclipse/linux_eclipse.html (tutorial de como criar projetos no eclipse)
+
+Bibliotecas usadas:
+opencv_imgproc
+opencv_highgui
+opencv_core
+opencv_imgcodecs
+
+
