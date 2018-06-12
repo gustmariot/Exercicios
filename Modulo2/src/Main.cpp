@@ -22,11 +22,9 @@ int zoomOut() {
     }
     int linhasOrig = img.rows;
     int colunasOrig = img.cols;
-    int maxL = ceil(linhasOrig);
-    int maxC = ceil(colunasOrig);
-    cout << maxL;
-    cout << maxC;
-    printf("maxL: %d, maxC: %d",maxL, maxC);
+    int maxL = ceil(linhasOrig); // @suppress("Function cannot be resolved")
+    int maxC = ceil(colunasOrig); // @suppress("Function cannot be resolved")
+
     result.create(maxL, maxC, CV_8UC3);
     for (int l = 0; l < maxL; l++) {
         for (int k = 0; k < maxC; k++) {
@@ -113,9 +111,9 @@ int limiar() {
 			int gS = pixelS[1];
 			int bS = pixelS[0];
 
-			int rR = abs(rC - rS);
-			int gR = abs(gC - gS);
-			int bR = abs(bC - bS);
+			int rR = abs(rC - rS); // @suppress("Ambiguous problem")
+			int gR = abs(gC - gS); // @suppress("Ambiguous problem")
+			int bR = abs(bC - bS); // @suppress("Ambiguous problem")
 
 			if (rR >= limiar)
 				rR = 255;
@@ -225,42 +223,3 @@ int main() {
 	limiar();
 	return 1;
 }
-
-/*
- *
- * CÓDIGO DO MAURICIO E KUERTEN
-
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/imgproc.hpp"
-#include "opencv2/videoio.hpp"
-#include <opencv2/highgui.hpp>
-#include <opencv2/video.hpp>
-#include <iostream>
-#include <sstream>
-#include <vector>
-
-
-using namespace cv;
-using namespace std;
-
-
-int main(int argc, char* argv[])
-{
-	Mat bkg, bkgp, nbkg;
-
-	bkg = imread("./ComObj.jpg");
-	bkgp = imread("./SemObj.jpg");
-	if(bkg.empty() || bkgp.empty()){
-		cerr << "Unable to open image frame: ";
-		exit(EXIT_FAILURE);
-	}
-	cv::cvtColor(bkg,bkg, CV_BGR2GRAY);
-	cv::cvtColor(bkgp,bkgp, CV_BGR2GRAY);
-	absdiff(bkg,bkgp,nbkg);
-	imwrite( "./Exerc2.jpg", nbkg);
-
-
-    return EXIT_SUCCESS;
-}
-
-*/

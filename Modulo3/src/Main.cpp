@@ -116,8 +116,8 @@ int exercicio2() {
 	int colunas = img.cols;
 	int linhas = img.rows;
 
-	int i, j, brancos1 = 0, naoBrancos1 = 0, brancos2 = 0, naoBrancos2 = 0, last = 0;
-	float p1, p2, pf, esp1, esp2;
+	int i, j, brancos1 = 0, naoBrancos1 = 0, brancos2 = 0, naoBrancos2 = 0;
+	float p1, p2, pf;
 
 	for (i = 0; i < linhas; ++i) {
 
@@ -209,7 +209,7 @@ int exercicio4(string entrada){
 	  namedWindow("thr",0);
 	  imshow("thr",thr);
 
-	  vector<vector <Point>> contours;
+	  vector<vector <Point> > contours;
 	  vector<Vec4i> hierarchy;
 	  Mat dst(src.rows,src.cols,CV_8UC1,Scalar::all(0));
 	  int count=0;
@@ -234,6 +234,6 @@ int main() {
 	exercicio1("./ComObjSalEPimenta.jpg", "./ComObjSalEPimenta");
 	exercicio2();
 	exercicio3("./Manchas.jpg", "./Manchas");
-	exercicio4("./6buracos.jpg")
+	exercicio4("./6buracos.jpg");
 	return 1;
 }
