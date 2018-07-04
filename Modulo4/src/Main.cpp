@@ -61,7 +61,7 @@ int exercicio1(string entrada, string saida) {
 	q2.copyTo(q1);
 	tmp.copyTo(q2);
 
-	normalize(magI, magI, 0, 1, CV_MINMAX);
+	 (magI, magI, 0, 1, CV_MINMAX);
 	imshow("Input Image", imgCinza);
 	imshow("Resultado Exercicio 1", magI);
 	waitKey();
@@ -295,8 +295,8 @@ cv::Mat butterworth(const cv::Mat &img, int d0, int n, int high, int low)
 }
 
 int main() {
-	exercicio1("./lena.jpg", "./SaidaExercicio1");
-	exercicio2("./lena.jpg", "./SaidaExercicio2");
+	/*exercicio1("./lena.jpg", "./SaidaExercicio1");*/
+	/*exercicio2("./lena.jpg", "./SaidaExercicio2");*/
 	exercicio3("./lena.jpg", "./SaidaExercicio2");
 	return 1;
 }

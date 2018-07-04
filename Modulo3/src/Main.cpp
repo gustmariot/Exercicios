@@ -168,7 +168,7 @@ int exercicio2() {
 		cout << "negado \n";
 	}
 
-	cout << "prop: " << pf;
+	cout << "prop: " << pf << "\n";
 
 	return 0;
 }
@@ -212,7 +212,6 @@ int exercicio4(string entrada){
 	  vector<vector <Point> > contours;
 	  vector<Vec4i> hierarchy;
 	  Mat dst(src.rows,src.cols,CV_8UC1,Scalar::all(0));
-	  int count=0;
 
 	  findContours( thr, contours, hierarchy,CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
 

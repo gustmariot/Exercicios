@@ -26,6 +26,7 @@ int zoomOut() {
     int maxC = ceil(colunasOrig); // @suppress("Function cannot be resolved")
 
     result.create(maxL, maxC, CV_8UC3);
+
     for (int l = 0; l < maxL; l++) {
         for (int k = 0; k < maxC; k++) {
             int somaR = 0;
@@ -156,7 +157,6 @@ int zoomIn() {
 	for (int i = 0; i < maxLinhas; i++) {
 		l = 0;
 		for (int j = 0; j < maxColunas; j++) {
-			cout << "Vai começar o for\n";
 			Vec3b pixel1 = img.at<Vec3b>(i, j);
 			Vec3b pixel2 = img.at<Vec3b>(i, j + 1);
 			int r1 = pixel1[2];
@@ -219,7 +219,7 @@ int zoomIn() {
 
 int main() {
 	zoomIn();
-	zoomOut();
+	/*zoomOut();*/
 	limiar();
 	return 1;
 }
